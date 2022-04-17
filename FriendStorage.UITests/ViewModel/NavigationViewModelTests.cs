@@ -20,11 +20,11 @@ namespace FriendStorage.UITests.ViewModel
 
             var friend = viewModel.Friends.SingleOrDefault(f => f.Id == 1);
             Assert.NotNull(friend);
-            Assert.Equal("Julia", friend.DisplayName);
+            Assert.Equal("Julia", friend.DisplayMember);
 
             friend = viewModel.Friends.SingleOrDefault(f => f.Id == 2);
             Assert.NotNull(friend);
-            Assert.Equal("Bob", friend.DisplayName);
+            Assert.Equal("Bob", friend.DisplayMember);
         }
 
         [Fact]
@@ -44,8 +44,8 @@ namespace FriendStorage.UITests.ViewModel
     {
         public IEnumerable<LookupItem> GetAllFriends()
         {
-            yield return new LookupItem { Id = 1, DisplayName = "Julia" };
-            yield return new LookupItem { Id = 2, DisplayName = "Bob" };
+            yield return new LookupItem { Id = 1, DisplayMember = "Julia" };
+            yield return new LookupItem { Id = 2, DisplayMember = "Bob" };
         }
     }
 }

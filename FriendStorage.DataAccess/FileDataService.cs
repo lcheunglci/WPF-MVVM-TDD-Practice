@@ -61,7 +61,7 @@ namespace FriendStorage.DataAccess
             return ReadFromFile().Select(f => new LookupItem
             {
                 Id = f.Id,
-                DisplayName = $"{f.FirstName} {f.LastName}",
+                DisplayMember = $"{f.FirstName} {f.LastName}",
             });
         }
 
