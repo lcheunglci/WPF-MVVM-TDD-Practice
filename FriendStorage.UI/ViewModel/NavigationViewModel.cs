@@ -15,6 +15,7 @@ namespace FriendStorage.UI.ViewModel
 
         public void Load()
         {
+            Friends.Clear();
             foreach (var friend in _dataProvider.GetAllFriends())
             {
                 Friends.Add(friend);

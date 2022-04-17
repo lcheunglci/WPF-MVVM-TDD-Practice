@@ -1,19 +1,18 @@
-﻿using System;
-
-namespace FriendStorage.UI.ViewModel
+﻿namespace FriendStorage.UI.ViewModel
 {
-  public class MainViewModel : ViewModelBase
-  {
-    public MainViewModel()
+    public class MainViewModel : ViewModelBase
     {
-      NavigationViewModel = new NavigationViewModel();
-    }
+        public MainViewModel()
+        {
+            // TODO: Fix this 
+            // NavigationViewModel = new NavigationViewModel();
+        }
 
-    public NavigationViewModel NavigationViewModel { get;private set; }
+        public NavigationViewModel NavigationViewModel { get; private set; }
 
-    public void Load()
-    {
-      NavigationViewModel.Load();
+        public void Load()
+        {
+            NavigationViewModel.Load();
+        }
     }
-  }
 }
