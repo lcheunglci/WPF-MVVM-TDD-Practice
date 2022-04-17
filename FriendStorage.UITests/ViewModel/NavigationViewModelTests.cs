@@ -20,11 +20,11 @@ namespace FriendStorage.UITests.ViewModel
 
             var friend = viewModel.Friends.SingleOrDefault(f => f.Id == 1);
             Assert.NotNull(friend);
-            Assert.Equal("Julia", friend.FirstName);
+            Assert.Equal("Julia", friend.DisplayName);
 
             friend = viewModel.Friends.SingleOrDefault(f => f.Id == 2);
             Assert.NotNull(friend);
-            Assert.Equal("Bob", friend.FirstName);
+            Assert.Equal("Bob", friend.DisplayName);
         }
 
         [Fact]
@@ -36,24 +36,16 @@ namespace FriendStorage.UITests.ViewModel
             viewModel.Load();
 
             Assert.Equal(2, viewModel.Friends.Count);
-
-            var friend = viewModel.Friends.SingleOrDefault(f => f.Id == 1);
-            Assert.NotNull(friend);
-            Assert.Equal("Julia", friend.FirstName);
-
-            friend = viewModel.Friends.SingleOrDefault(f => f.Id == 2);
-            Assert.NotNull(friend);
-            Assert.Equal("Bob", friend.FirstName);
         }
 
     }
 
     public class NavigationDataProviderMock : INavigationDataProvider
     {
-        public IEnumerable<Friend> GetAllFriends()
+        public IEnumerable<LookupItem> GetAllFriends()
         {
-            yield return new Friend { Id = 1, FirstName = "Julia" };
-            yield return new Friend { Id = 2, FirstName = "Bob" };
+            yield return new LookupItem { Id = 1, DisplayName = "Julia" };
+            yield return new LookupItem { Id = 2, DisplayName = "Bob" };
         }
     }
 }
