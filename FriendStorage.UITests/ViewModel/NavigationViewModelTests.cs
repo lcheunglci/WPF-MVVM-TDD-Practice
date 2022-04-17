@@ -53,7 +53,7 @@ namespace FriendStorage.UITests.ViewModel
         public IEnumerable<Friend> GetAllFriends()
         {
             yield return new Friend { Id = 1, FirstName = "Julia" };
-            yield return new Friend { Id = 1, FirstName = "Bob" };
+            yield return new Friend { Id = 2, FirstName = "Bob" };
         }
     }
 }
