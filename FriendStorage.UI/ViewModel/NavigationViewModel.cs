@@ -1,26 +1,27 @@
-﻿using FriendStorage.DataAccess;
-using FriendStorage.Model;
-using System;
+﻿using FriendStorage.Model;
+using FriendStorage.UI.DataProvider;
 using System.Collections.ObjectModel;
 
 namespace FriendStorage.UI.ViewModel
 {
-  public class NavigationViewModel : ViewModelBase
-  {
-    public NavigationViewModel()
+    public class NavigationViewModel : ViewModelBase
     {
-      Friends = new ObservableCollection<Friend>();
-    }
+        private INavigationDataProvider _dataProvider;
+        public NavigationViewModel(INavigationDataProvider dataProvider)
+        {
+            Friends = new ObservableCollection<Friend>();
+            _dataProvider = dataProvider;
+        }
 
-    public void Load()
-    {
-      var dataService = new FileDataService();
-      foreach (var friend in dataService.GetAllFriends())
-      {
-        Friends.Add(friend);
-      }
-    }
+        public void Load()
+        {
+            foreach (var friend in _dataProvider.GetAllFriends())
+            {
+                Friends.Add(friend);
+            }
+        }
 
-    public ObservableCollection<Friend> Friends { get; private set; }
-  }
+        public ObservableCollection<Friend> Friends { get; private set; }
+
+    }
 }
