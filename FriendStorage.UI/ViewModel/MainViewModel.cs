@@ -6,7 +6,7 @@ namespace FriendStorage.UI.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        private FriendEditViewModel _selectedFriendViewModel;
+        private IFriendEditViewModel _selectedFriendViewModel;
         private Func<IFriendEditViewModel> _friendEditVmCreator;
 
 
