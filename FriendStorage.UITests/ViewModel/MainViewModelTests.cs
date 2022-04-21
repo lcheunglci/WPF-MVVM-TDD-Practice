@@ -1,5 +1,6 @@
 ﻿using FriendStorage.UI.Events;
 using FriendStorage.UI.ViewModel;
+using FriendStorage.UITests.Extensions;
 using Moq;
 using Prism.Events;
 using System.Collections.Generic;
@@ -75,17 +76,12 @@ namespace FriendStorage.UITests.ViewModel
         [Fact]
         public void ShouldRaisePropertyChangedEventForSelectedFriendEditViewModel()
         {
-            var fired = false;
-            _viewModel.PropertyChanged += (s, e) =>
-            {
-                if (e.PropertyName == nameof(_viewModel.SelectedFriendEditViewModel))
-                {
-                    fired = true;
-                }
-            };
-
             var friendEditVmMock = new Mock<IFriendEditViewModel>();
-            _viewModel.SelectedFriendEditViewModel = friendEditVmMock.Object;
+
+            var fired = _viewModel.IsPropertyChangedFired(() =>
+            {
+                _viewModel.SelectedFriendEditViewModel = friendEditVmMock.Object;
+            }, nameof(_viewModel.SelectedFriendEditViewModel));
 
             Assert.True(fired);
         }
