@@ -56,7 +56,7 @@ namespace FriendStorage.UITests.ViewModel
 
             Assert.Equal(1, _viewModel.FriendEditViewModels.Count);
             var friendEditVm = _viewModel.FriendEditViewModels.First();
-            Assert.Equal(friendEditVm, _viewModel.SelectedFriendViewModel);
+            Assert.Equal(friendEditVm, _viewModel.SelectedFriendEditViewModel);
             _friendEditViewModelMocks.First().Verify(vm => vm.Load(friendId), Times.Once);
         }
 
@@ -70,6 +70,24 @@ namespace FriendStorage.UITests.ViewModel
             _openFriendEditViewEvent.Publish(7);
 
             Assert.Equal(3, _viewModel.FriendEditViewModels.Count);
+        }
+
+        [Fact]
+        public void ShouldRaisePropertyChangedEventForSelectedFriendEditViewModel()
+        {
+            var fired = false;
+            _viewModel.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(_viewModel.SelectedFriendEditViewModel))
+                {
+                    fired = true;
+                }
+            };
+
+            var friendEditVmMock = new Mock<IFriendEditViewModel>();
+            _viewModel.SelectedFriendEditViewModel = friendEditVmMock.Object;
+
+            Assert.True(fired);
         }
     }
 }
