@@ -25,7 +25,8 @@ namespace FriendStorage.UI.ViewModel
 
         private void OnCloseFriendTabExecute(object obj)
         {
-            throw new NotImplementedException();
+            var friendEditVm = (IFriendEditViewModel)obj;
+            FriendEditViewModels.Remove(friendEditVm);
         }
 
         private void OnOpenFriendEditView(int friendId)
