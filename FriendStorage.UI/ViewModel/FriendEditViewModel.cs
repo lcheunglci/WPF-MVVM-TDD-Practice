@@ -11,18 +11,29 @@ namespace FriendStorage.UI.ViewModel
 
     public class FriendEditViewModel : ViewModelBase, IFriendEditViewModel
     {
-        private IFriendDataProvider _friendProvider;
+        private IFriendDataProvider _dataProvider;
+        private Friend _friend;
 
-        public FriendEditViewModel(IFriendDataProvider friendProvider)
+        public FriendEditViewModel(IFriendDataProvider dataProvider)
         {
-            _friendProvider = friendProvider;
+            _dataProvider = dataProvider;
         }
 
-        public Friend Friend => throw new System.NotImplementedException();
-
+        public Friend Friend
+        {
+            get
+            {
+                return _friend;
+            }
+            private set
+            {
+                _friend = value;
+            }
+        }
         public void Load(int friendId)
         {
-            throw new System.NotImplementedException();
+            var friend = _dataProvider.GetFriendById(friendId);
+            Friend = friend;
         }
     }
 }
