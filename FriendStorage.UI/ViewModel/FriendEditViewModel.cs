@@ -28,6 +28,7 @@ namespace FriendStorage.UI.ViewModel
             private set
             {
                 _friend = value;
+                OnPropertyChanged();
             }
         }
         public void Load(int friendId)
