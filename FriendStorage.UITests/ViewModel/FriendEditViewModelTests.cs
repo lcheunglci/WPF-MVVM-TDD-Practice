@@ -56,5 +56,11 @@ namespace FriendStorage.UITests.ViewModel
             _viewModel.Friend.FirstName = "Changed";
             Assert.True(_viewModel.SaveCommand.CanExecute(null));
         }
+
+        [Fact]
+        public void ShouldDisableSaveCommandWithoutLoad()
+        {
+            Assert.False(_viewModel.SaveCommand.CanExecute(null));
+        }
     }
 }
