@@ -51,6 +51,12 @@ namespace FriendStorage.UI.ViewModel
         {
             var friend = _dataProvider.GetFriendById(friendId);
             Friend = new FriendWrapper(friend);
+            Friend.PropertyChanged += Friend_PropertyChanged;
+        }
+
+        private void Friend_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
         }
     }
 }

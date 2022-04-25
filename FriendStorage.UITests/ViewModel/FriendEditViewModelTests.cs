@@ -62,5 +62,15 @@ namespace FriendStorage.UITests.ViewModel
         {
             Assert.False(_viewModel.SaveCommand.CanExecute(null));
         }
+
+        [Fact]
+        public void ShouldRaiseCanExecuteChangedForSaveCommandWhenFriendIsChanged()
+        {
+            _viewModel.Load(_friendId);
+            var fired = false;
+            _viewModel.SaveCommand.CanExecuteChanged += (s, e) => fired = true;
+            _viewModel.Friend.FirstName = "Changed";
+            Assert.True(fired);
+        }
     }
 }
