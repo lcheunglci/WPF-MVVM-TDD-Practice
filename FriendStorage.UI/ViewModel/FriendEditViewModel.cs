@@ -30,6 +30,7 @@ namespace FriendStorage.UI.ViewModel
         private void OnSaveExecute(object obj)
         {
             _dataProvider.SaveFriend(Friend.Model);
+            Friend.AcceptChanges();
         }
 
         public ICommand SaveCommand { get; private set; }
