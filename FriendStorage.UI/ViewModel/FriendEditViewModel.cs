@@ -1,7 +1,6 @@
 ﻿using FriendStorage.UI.Command;
 using FriendStorage.UI.DataProvider;
 using FriendStorage.UI.Wrapper;
-using System;
 using System.Windows.Input;
 
 namespace FriendStorage.UI.ViewModel
@@ -30,7 +29,7 @@ namespace FriendStorage.UI.ViewModel
 
         private void OnSaveExecute(object obj)
         {
-            throw new NotImplementedException();
+            _dataProvider.SaveFriend(Friend.Model);
         }
 
         public ICommand SaveCommand { get; private set; }
