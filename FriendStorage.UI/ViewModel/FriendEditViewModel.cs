@@ -1,6 +1,7 @@
 ﻿using FriendStorage.UI.Command;
 using FriendStorage.UI.DataProvider;
 using FriendStorage.UI.Wrapper;
+using Prism.Events;
 using System.Windows.Input;
 
 namespace FriendStorage.UI.ViewModel
@@ -14,11 +15,13 @@ namespace FriendStorage.UI.ViewModel
     public class FriendEditViewModel : ViewModelBase, IFriendEditViewModel
     {
         private IFriendDataProvider _dataProvider;
+        private IEventAggregator _eventAggregator;
         private FriendWrapper _friend;
 
-        public FriendEditViewModel(IFriendDataProvider dataProvider)
+        public FriendEditViewModel(IFriendDataProvider dataProvider, IEventAggregator eventAggregator)
         {
             _dataProvider = dataProvider;
+            _eventAggregator = eventAggregator;
             SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
         }
 
