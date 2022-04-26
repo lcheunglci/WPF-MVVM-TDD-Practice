@@ -1,5 +1,6 @@
 ﻿using FriendStorage.UI.Command;
 using FriendStorage.UI.DataProvider;
+using FriendStorage.UI.Events;
 using FriendStorage.UI.Wrapper;
 using Prism.Events;
 using System.Windows.Input;
@@ -34,6 +35,7 @@ namespace FriendStorage.UI.ViewModel
         {
             _dataProvider.SaveFriend(Friend.Model);
             Friend.AcceptChanges();
+            _eventAggregator.GetEvent<FriendSavedEvent>().Publish(Friend.Model);
         }
 
         public ICommand SaveCommand { get; private set; }
