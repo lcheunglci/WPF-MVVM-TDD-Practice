@@ -23,8 +23,16 @@ namespace FriendStorage.UI.ViewModel
         }
 
         public int Id { get; private set; }
-        public string DisplayMember { get; set; }
+        private string _displayMember;
         public ICommand OpenFriendEditViewCommand { get; private set; }
-
+        public string DisplayMember
+        {
+            get => _displayMember;
+            set
+            {
+                _displayMember = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }
