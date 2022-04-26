@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace FriendStorage.UI.ViewModel
 {
-    public class NavigationItemViewModel
+    public class NavigationItemViewModel : ViewModelBase
     {
         private IEventAggregator _eventAggregator;
 
