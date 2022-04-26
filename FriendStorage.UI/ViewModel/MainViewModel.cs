@@ -21,6 +21,12 @@ namespace FriendStorage.UI.ViewModel
             _friendEditVmCreator = friendEditVmCreator;
             eventAggregator.GetEvent<OpenFriendEditViewEvent>().Subscribe(OnOpenFriendEditView);
             CloseFriendTabCommand = new DelegateCommand(OnCloseFriendTabExecute);
+            AddFriendCommand = new DelegateCommand(OnAddFriendExecute);
+        }
+
+        private void OnAddFriendExecute(object obj)
+        {
+            throw new NotImplementedException();
         }
 
         private void OnCloseFriendTabExecute(object obj)
@@ -41,6 +47,8 @@ namespace FriendStorage.UI.ViewModel
             }
             SelectedFriendEditViewModel = friendEditVm;
         }
+
+        public ICommand AddFriendCommand { get; private set; }
 
         public ICommand CloseFriendTabCommand { get; private set; }
 
