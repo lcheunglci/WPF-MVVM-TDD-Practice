@@ -1,5 +1,6 @@
 ﻿using FriendStorage.Model;
 using FriendStorage.UI.DataProvider;
+using FriendStorage.UI.Events;
 using FriendStorage.UI.ViewModel;
 using Moq;
 using Prism.Events;
@@ -13,10 +14,15 @@ namespace FriendStorage.UITests.ViewModel
     {
         private Mock<INavigationDataProvider> _navigationDataProviderMock;
         private NavigationViewModel _viewModel;
+        private FriendSavedEvent _friendSavedEvent;
 
         public NavigationViewModelTests()
         {
+            _friendSavedEvent = new FriendSavedEvent();
             var eventAggregatorMock = new Mock<IEventAggregator>();
+            eventAggregatorMock.Setup(ea => ea.GetEvent<FriendSavedEvent>())
+                .Returns(_friendSavedEvent);
+
             _navigationDataProviderMock = new Mock<INavigationDataProvider>();
             _navigationDataProviderMock.Setup(dp => dp.GetAllFriends()).Returns(
                 new List<LookupItem> {
@@ -53,5 +59,24 @@ namespace FriendStorage.UITests.ViewModel
             Assert.Equal(2, _viewModel.Friends.Count);
         }
 
+        [Fact]
+        public void ShouldUpdateNavigationItemWhenFriendIsSaved()
+        {
+            _viewModel.Load();
+            var navigationItem = _viewModel.Friends.First();
+
+            var friendId = navigationItem.Id;
+
+            _friendSavedEvent.Publish(
+                new Friend
+                {
+                    Id = friendId,
+                    FirstName = "Amy",
+                    LastName = "Doe"
+                });
+
+            Assert.Equal("Amy Doe", navigationItem.DisplayMember);
+        }
     }
 }
+
