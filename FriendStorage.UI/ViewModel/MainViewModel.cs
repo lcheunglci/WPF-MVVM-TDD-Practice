@@ -24,15 +24,19 @@ namespace FriendStorage.UI.ViewModel
             AddFriendCommand = new DelegateCommand(OnAddFriendExecute);
         }
 
-        private void OnAddFriendExecute(object obj)
-        {
-            throw new NotImplementedException();
-        }
-
         private void OnCloseFriendTabExecute(object obj)
         {
             var friendEditVm = (IFriendEditViewModel)obj;
             FriendEditViewModels.Remove(friendEditVm);
+        }
+
+        private void OnAddFriendExecute(object obj)
+        {
+            var friendEditVm = _friendEditVmCreator();
+            FriendEditViewModels.Add(friendEditVm);
+            friendEditVm.Load(null);
+
+            SelectedFriendEditViewModel = friendEditVm;
         }
 
         private void OnOpenFriendEditView(int friendId)
