@@ -9,7 +9,7 @@ namespace FriendStorage.UI.ViewModel
 {
     public interface IFriendEditViewModel
     {
-        void Load(int friendId);
+        void Load(int? friendId);
         FriendWrapper Friend { get; }
     }
 
@@ -52,9 +52,9 @@ namespace FriendStorage.UI.ViewModel
                 OnPropertyChanged();
             }
         }
-        public void Load(int friendId)
+        public void Load(int? friendId)
         {
-            var friend = _dataProvider.GetFriendById(friendId);
+            var friend = _dataProvider.GetFriendById(friendId.Value);
             Friend = new FriendWrapper(friend);
             Friend.PropertyChanged += Friend_PropertyChanged;
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
