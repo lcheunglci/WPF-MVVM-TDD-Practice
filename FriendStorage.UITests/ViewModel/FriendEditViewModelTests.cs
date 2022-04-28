@@ -134,5 +134,25 @@ namespace FriendStorage.UITests.ViewModel
 
             _dataProviderMock.Verify(dp => dp.GetFriendById(It.IsAny<int>()), Times.Never());
         }
+
+        [Fact]
+        public void ShouldEnableDeleteCommandForExistingFriend()
+        {
+            _viewModel.Load(_friendId);
+            Assert.True(_viewModel.DeleteCommand.CanExecute(null));
+        }
+
+        [Fact]
+        public void ShouldDisableDeleteCommandForNewFriend()
+        {
+            _viewModel.Load(null);
+            Assert.False(_viewModel.DeleteCommand.CanExecute(null));
+        }
+
+        [Fact]
+        public void ShouldDisableDeleteCommandWithoutLoad()
+        {
+            Assert.False(_viewModel.DeleteCommand.CanExecute(null));
+        }
     }
 }

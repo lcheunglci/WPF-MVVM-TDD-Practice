@@ -4,6 +4,7 @@ using FriendStorage.UI.DataProvider;
 using FriendStorage.UI.Events;
 using FriendStorage.UI.Wrapper;
 using Prism.Events;
+using System;
 using System.Windows.Input;
 
 namespace FriendStorage.UI.ViewModel
@@ -25,21 +26,12 @@ namespace FriendStorage.UI.ViewModel
             _dataProvider = dataProvider;
             _eventAggregator = eventAggregator;
             SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
-        }
-
-        private bool OnSaveCanExecute(object arg)
-        {
-            return Friend != null && Friend.IsChanged;
-        }
-
-        private void OnSaveExecute(object obj)
-        {
-            _dataProvider.SaveFriend(Friend.Model);
-            Friend.AcceptChanges();
-            _eventAggregator.GetEvent<FriendSavedEvent>().Publish(Friend.Model);
+            DeleteCommand = new DelegateCommand(OnDeleteExecute, OnDeleteCanExecute);
         }
 
         public ICommand SaveCommand { get; private set; }
+
+        public ICommand DeleteCommand { get; private set; }
 
         public FriendWrapper Friend
         {
@@ -64,6 +56,27 @@ namespace FriendStorage.UI.ViewModel
         private void Friend_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+        }
+        private bool OnDeleteCanExecute(object arg)
+        {
+            return Friend != null && Friend.Id > 0;
+        }
+
+        private void OnDeleteExecute(object obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool OnSaveCanExecute(object arg)
+        {
+            return Friend != null && Friend.IsChanged;
+        }
+
+        private void OnSaveExecute(object obj)
+        {
+            _dataProvider.SaveFriend(Friend.Model);
+            Friend.AcceptChanges();
+            _eventAggregator.GetEvent<FriendSavedEvent>().Publish(Friend.Model);
         }
     }
 }
