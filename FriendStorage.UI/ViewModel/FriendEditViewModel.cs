@@ -1,4 +1,5 @@
-﻿using FriendStorage.UI.Command;
+﻿using FriendStorage.Model;
+using FriendStorage.UI.Command;
 using FriendStorage.UI.DataProvider;
 using FriendStorage.UI.Events;
 using FriendStorage.UI.Wrapper;
@@ -54,7 +55,7 @@ namespace FriendStorage.UI.ViewModel
         }
         public void Load(int? friendId)
         {
-            var friend = _dataProvider.GetFriendById(friendId.Value);
+            var friend = friendId.HasValue ? _dataProvider.GetFriendById(friendId.Value) : new Friend();
             Friend = new FriendWrapper(friend);
             Friend.PropertyChanged += Friend_PropertyChanged;
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();

@@ -130,7 +130,7 @@ namespace FriendStorage.UITests.ViewModel
             Assert.Null(_viewModel.Friend.LastName);
             Assert.Null(_viewModel.Friend.FirstName);
             Assert.Null(_viewModel.Friend.Birthday);
-            Assert.Null(_viewModel.Friend.IsDeveloper);
+            Assert.False(_viewModel.Friend.IsDeveloper);
 
             _dataProviderMock.Verify(dp => dp.GetFriendById(It.IsAny<int>()), Times.Never());
         }
