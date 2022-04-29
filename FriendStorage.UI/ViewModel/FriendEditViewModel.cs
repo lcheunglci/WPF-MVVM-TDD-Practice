@@ -50,14 +50,20 @@ namespace FriendStorage.UI.ViewModel
             var friend = friendId.HasValue ? _dataProvider.GetFriendById(friendId.Value) : new Friend();
             Friend = new FriendWrapper(friend);
             Friend.PropertyChanged += Friend_PropertyChanged;
-            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+            InvalidateCommands();
         }
 
         private void Friend_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
+            InvalidateCommands();
+        }
+
+        private void InvalidateCommands()
+        {
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
             ((DelegateCommand)DeleteCommand).RaiseCanExecuteChanged();
         }
+
         private bool OnDeleteCanExecute(object arg)
         {
             return Friend != null && Friend.Id > 0;
