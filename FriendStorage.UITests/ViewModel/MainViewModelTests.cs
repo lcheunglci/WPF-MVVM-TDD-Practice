@@ -14,6 +14,7 @@ namespace FriendStorage.UITests.ViewModel
     public class MainViewModelTests
     {
         private OpenFriendEditViewEvent _openFriendEditViewEvent;
+        private FriendDeletedEvent _friendDeletedEvent;
         private Mock<INavigationViewModel> _navigationViewModelMock;
         private Mock<IEventAggregator> _eventAggregatorMock;
         private MainViewModel _viewModel;
@@ -22,10 +23,13 @@ namespace FriendStorage.UITests.ViewModel
         public MainViewModelTests()
         {
             _friendEditViewModelMocks = new List<Mock<IFriendEditViewModel>>();
-            _openFriendEditViewEvent = new OpenFriendEditViewEvent();
             _navigationViewModelMock = new Mock<INavigationViewModel>();
+
+            _openFriendEditViewEvent = new OpenFriendEditViewEvent();
+            _friendDeletedEvent = new FriendDeletedEvent();
             _eventAggregatorMock = new Mock<IEventAggregator>();
             _eventAggregatorMock.Setup(ea => ea.GetEvent<OpenFriendEditViewEvent>()).Returns(_openFriendEditViewEvent);
+            _eventAggregatorMock.Setup(ea => ea.GetEvent<FriendDeletedEvent>()).Returns(_friendDeletedEvent);
 
             _viewModel = new MainViewModel(_navigationViewModelMock.Object, CreateFriendEditViewModel, _eventAggregatorMock.Object);
 
@@ -109,6 +113,21 @@ namespace FriendStorage.UITests.ViewModel
             _viewModel.CloseFriendTabCommand.Execute(friendEditVm);
 
             Assert.Equal(0, _viewModel.FriendEditViewModels.Count);
+        }
+
+        [Fact]
+        public void ShouldRemoveFriendEditViewModelOnFriendDeletedEvent()
+        {
+            const int deletedFriendId = 7;
+            _openFriendEditViewEvent.Publish(deletedFriendId);
+            _openFriendEditViewEvent.Publish(8);
+            _openFriendEditViewEvent.Publish(9);
+
+            _friendDeletedEvent.Publish(deletedFriendId);
+
+            Assert.Equal(2, _viewModel.FriendEditViewModels.Count);
+            Assert.True(_viewModel.FriendEditViewModels.All(vm => vm.Friend.Id != deletedFriendId));
+
         }
     }
 }
