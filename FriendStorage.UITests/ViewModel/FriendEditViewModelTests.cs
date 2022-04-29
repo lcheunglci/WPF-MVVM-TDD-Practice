@@ -1,5 +1,6 @@
 ﻿using FriendStorage.Model;
 using FriendStorage.UI.DataProvider;
+using FriendStorage.UI.Dialogs;
 using FriendStorage.UI.Events;
 using FriendStorage.UI.ViewModel;
 using FriendStorage.UITests.Extensions;
@@ -14,6 +15,7 @@ namespace FriendStorage.UITests.ViewModel
         private Mock<FriendDeletedEvent> _friendDeleteEventMock;
         private Mock<FriendSavedEvent> _friendSavedEventMock;
         private Mock<IEventAggregator> _eventAggregatorMock;
+        private Mock<IMessageDialogService> _messageDialogServiceMock;
         private Mock<IFriendDataProvider> _dataProviderMock;
         private int _friendId = 5;
         private FriendEditViewModel _viewModel;
@@ -28,9 +30,11 @@ namespace FriendStorage.UITests.ViewModel
             _eventAggregatorMock.Setup(ea => ea.GetEvent<FriendDeletedEvent>())
                 .Returns(_friendDeleteEventMock.Object);
 
+            _messageDialogServiceMock = new Mock<IMessageDialogService>();
+
             _dataProviderMock = new Mock<IFriendDataProvider>();
             _dataProviderMock.Setup(dp => dp.GetFriendById(_friendId)).Returns(new Friend { Id = _friendId, FirstName = "Bob" });
-            _viewModel = new FriendEditViewModel(_dataProviderMock.Object, _eventAggregatorMock.Object);
+            _viewModel = new FriendEditViewModel(_dataProviderMock.Object, _eventAggregatorMock.Object, _messageDialogServiceMock.Object);
         }
 
         [Fact]
