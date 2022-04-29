@@ -21,7 +21,11 @@ namespace FriendStorage.UI.Wrapper
         public bool IsChanged
         {
             get { return _isChanged; }
-            set { _isChanged = value; }
+            set
+            {
+                _isChanged = value;
+                OnPropertyChanged();
+            }
         }
 
         public void AcceptChanges()

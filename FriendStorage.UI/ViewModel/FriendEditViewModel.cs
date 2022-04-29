@@ -56,6 +56,7 @@ namespace FriendStorage.UI.ViewModel
         private void Friend_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+            ((DelegateCommand)DeleteCommand).RaiseCanExecuteChanged();
         }
         private bool OnDeleteCanExecute(object arg)
         {
