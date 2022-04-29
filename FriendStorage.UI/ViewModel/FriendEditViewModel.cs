@@ -71,6 +71,7 @@ namespace FriendStorage.UI.ViewModel
         private void OnDeleteExecute(object obj)
         {
             _dataProvider.DeleteFriend(Friend.Id);
+            _eventAggregator.GetEvent<FriendDeletedEvent>().Publish(Friend.Id);
         }
 
         private bool OnSaveCanExecute(object arg)

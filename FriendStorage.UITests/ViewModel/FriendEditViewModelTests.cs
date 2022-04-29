@@ -11,6 +11,7 @@ namespace FriendStorage.UITests.ViewModel
 {
     public class FriendEditViewModelTests
     {
+        private Mock<FriendDeletedEvent> _friendDeleteEventMock;
         private Mock<FriendSavedEvent> _friendSavedEventMock;
         private Mock<IEventAggregator> _eventAggregatorMock;
         private Mock<IFriendDataProvider> _dataProviderMock;
@@ -19,10 +20,14 @@ namespace FriendStorage.UITests.ViewModel
 
         public FriendEditViewModelTests()
         {
+            _friendDeleteEventMock = new Mock<FriendDeletedEvent>();
             _friendSavedEventMock = new Mock<FriendSavedEvent>();
             _eventAggregatorMock = new Mock<IEventAggregator>();
             _eventAggregatorMock.Setup(ea => ea.GetEvent<FriendSavedEvent>())
                 .Returns(_friendSavedEventMock.Object);
+            _eventAggregatorMock.Setup(ea => ea.GetEvent<FriendDeletedEvent>())
+                .Returns(_friendDeleteEventMock.Object);
+
             _dataProviderMock = new Mock<IFriendDataProvider>();
             _dataProviderMock.Setup(dp => dp.GetFriendById(_friendId)).Returns(new Friend { Id = _friendId, FirstName = "Bob" });
             _viewModel = new FriendEditViewModel(_dataProviderMock.Object, _eventAggregatorMock.Object);
@@ -139,6 +144,16 @@ namespace FriendStorage.UITests.ViewModel
             _viewModel.SaveCommand.Execute(null);
             _friendSavedEventMock.Verify(e => e.Publish(_viewModel.Friend.Model), Times.Once);
         }
+
+        [Fact]
+        public void ShouldPublishFriendDeletedEventWhenDeleteCommandIsExecuted()
+        {
+            _viewModel.Load(_friendId);
+
+            _viewModel.DeleteCommand.Execute(null);
+            _friendDeleteEventMock.Verify(e => e.Publish(_friendId), Times.Once);
+        }
+
 
         [Fact]
         public void ShouldCreateNewFriendWhenNullIsPassedToLoadMethod()
