@@ -4,7 +4,6 @@ using FriendStorage.UI.DataProvider;
 using FriendStorage.UI.Events;
 using FriendStorage.UI.Wrapper;
 using Prism.Events;
-using System;
 using System.Windows.Input;
 
 namespace FriendStorage.UI.ViewModel
@@ -71,7 +70,7 @@ namespace FriendStorage.UI.ViewModel
 
         private void OnDeleteExecute(object obj)
         {
-            throw new NotImplementedException();
+            _dataProvider.DeleteFriend(Friend.Id);
         }
 
         private bool OnSaveCanExecute(object arg)
