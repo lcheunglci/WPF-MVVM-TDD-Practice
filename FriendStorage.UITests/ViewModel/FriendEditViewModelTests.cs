@@ -149,13 +149,20 @@ namespace FriendStorage.UITests.ViewModel
             _friendSavedEventMock.Verify(e => e.Publish(_viewModel.Friend.Model), Times.Once);
         }
 
-        [Fact]
-        public void ShouldPublishFriendDeletedEventWhenDeleteCommandIsExecuted()
+        [Theory]
+        [InlineData(MessageDialogResult.Yes, 1)]
+        [InlineData(MessageDialogResult.No, 0)]
+        public void ShouldPublishFriendDeletedEventWhenDeleteCommandIsExecuted(MessageDialogResult result, int expectedDeleteFriendCalls)
         {
             _viewModel.Load(_friendId);
 
+            _messageDialogServiceMock.Setup(ds => ds.ShowYesNoDialog(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(result);
+
             _viewModel.DeleteCommand.Execute(null);
             _friendDeleteEventMock.Verify(e => e.Publish(_friendId), Times.Once);
+            _messageDialogServiceMock.Verify(ds => ds.ShowYesNoDialog(It.IsAny<string>(), It.IsAny<string>()),
+                Times.Exactly(expectedDeleteFriendCalls));
         }
 
 
