@@ -226,5 +226,19 @@ namespace FriendStorage.UITests.ViewModel
             _viewModel.DeleteCommand.Execute(null);
             _dataProviderMock.Verify(dp => dp.DeleteFriend(_friendId), Times.Once());
         }
+
+        [Fact]
+        public void ShouldDisplayCorrectMessageInDeleteDialog()
+        {
+            _viewModel.Load(_friendId);
+            var f = _viewModel.Friend;
+            f.FirstName = "Bob";
+            f.LastName = "Doe";
+
+            _viewModel.DeleteCommand.Execute(null);
+
+            _messageDialogServiceMock.Verify(d => d.ShowYesNoDialog("Delete Friend",
+                $"Do you really want to delete the friend '{f.FirstName} {f.LastName}'"), Times.Once());
+        }
     }
 }
