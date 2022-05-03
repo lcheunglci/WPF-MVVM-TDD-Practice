@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using FriendStorage.UI.View;
+using System.Windows;
 
 namespace FriendStorage.UI.Dialogs
 {
@@ -6,7 +7,13 @@ namespace FriendStorage.UI.Dialogs
     {
         public MessageDialogResult ShowYesNoDialog(string title, string message)
         {
-            return MessageBox.Show(message, title, MessageBoxButton.YesNo) == MessageBoxResult.Yes ? MessageDialogResult.Yes : MessageDialogResult.No;
+            return new YesNoDialog(message, title)
+            {
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Owner = App.Current.MainWindow
+            }.ShowDialog().GetValueOrDefault()
+                ? MessageDialogResult.Yes
+                : MessageDialogResult.No;
         }
     }
 }

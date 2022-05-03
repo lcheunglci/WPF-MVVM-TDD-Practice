@@ -113,6 +113,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Command\DelegateCommand.cs" />
+    <Compile Include="View\YesNoDialog.xaml.cs">
+      <DependentUpon>YesNoDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Wrapper\FriendWrapper.cs" />
     <Page Include="Styles\Brushes.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -149,6 +152,10 @@
     <Page Include="View\NavigationView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\YesNoDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
